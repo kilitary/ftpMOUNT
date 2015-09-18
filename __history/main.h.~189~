@@ -1,0 +1,332 @@
+// ---------------------------------------------------------------------------
+
+#ifndef mainH
+#define mainH
+// ---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include <ExtCtrls.hpp>
+#include <ComCtrls.hpp>
+#include <Menus.hpp>
+#include <pngimage.hpp>
+#include <Dialogs.hpp>
+#include "ExceptionLog.hpp"
+#include "Chart.hpp"
+#include "Series.hpp"
+#include "TeEngine.hpp"
+#include "TeeProcs.hpp"
+#include "ArrowCha.hpp"
+#include "GanttCh.hpp"
+#include "BubbleCh.hpp"
+#pragma pack(1)
+
+// ---------------------------------------------------------------------------
+class TForm1:public TForm
+{
+__published: // IDE-managed Components
+    TButton *Button1;
+    TButton *Button2;
+    TButton *Button3;
+    TButton *Button4;
+    TLabel *Label1;
+    TLabel *Label2;
+    TLabel *Label3;
+    TLabel *Label4;
+    TEdit *reads;
+    TEdit *writes;
+    TEdit *rfails;
+    TEdit *wfails;
+    TEdit *current;
+    TLabel *Label5;
+    TEdit *readb;
+    TPaintBox *pb1;
+    TEdit *ptr;
+    TLabel *Label6;
+    TEdit *cached;
+    TEdit *cacheblocks;
+    TPopupMenu *pop;
+    TButton *Button5;
+    TButton *Button6;
+    TLabel *diskptr;
+    TLabel *Label7;
+    TEdit *net;
+    TLabel *Label8;
+    TEdit *spd;
+    TImage *imgpaging;
+    TButton *Button7;
+    TImage *cacheimg;
+    TCheckBox *ramonly;
+    TEdit *Edit1;
+    TButton *Button8;
+    TOpenDialog *od;
+    TButton *Button9;
+    TCheckBox *debcheck;
+    TLabel *delays;
+    TButton *Button10;
+    TButton *Button11;
+    TListView *deblog;
+    TButton *Button12;
+    TCheckBox *netdebug;
+    TButton *Button13;
+    TLabel *imgptr;
+    TCheckBox *imgptrcheck;
+    TCheckBox *debcheck2;
+    TEdit *ramsize;
+    TLabel *Label9;
+    TEdit *ftpip;
+    TEdit *ftpuser;
+    TEdit *ftppass;
+    TLabel *Label10;
+    TLabel *diskcap;
+    TLabel *Label12;
+    TButton *Button14;
+    TLabel *Label13;
+    TLabel *headptr;
+    TCheckBox *unkdeb;
+    TCheckBox *anonymous;
+    TEdit *find;
+    TButton *Button15;
+    TLabel *diskhint;
+    TLabel *currentadd;
+    TLabel *maxquadl;
+    TLabel *ftpl;
+    TEdit *ftpe;
+    TImage *ftpimg;
+    TPageControl *pg1;
+    TTabSheet *TabSheet2;
+    TTabSheet *TabSheet3;
+    TTabSheet *TabSheet4;
+    TTabSheet *TabSheet5;
+    TLabel *Label11;
+    TTabSheet *TabSheet6;
+    TTabSheet *TabSheet7;
+    TLabel *Label14;
+    TLabel *Label15;
+    TChart *knotts;
+    TPageControl *pg2;
+    TTabSheet *TabSheet1;
+    TTabSheet *TabSheet8;
+    TLineSeries *Series1;
+    TLineSeries *Series2;
+    TCheckBox *fatdeb;
+    TLineSeries *Series3;
+    TLabel *Label16;
+    TEdit *dirlevel;
+    TTabSheet *tabftp;
+    TListView *ftplog;
+    TEdit *ftpent;
+    TImage *Image1;
+    TImage *Image2;
+    TImage *imgpsvread;
+    TImage *Image4;
+    TPaintBox *ftppb;
+    TLabel *Label17;
+    TEdit *ftpmaxfilesize;
+    TLabel *Label18;
+    TEdit *ftpmaxds;
+
+    void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+    void __fastcall Button1Click(TObject *Sender);
+    void __fastcall Button2Click(TObject *Sender);
+    void __fastcall Button4Click(TObject *Sender);
+    void __fastcall Button3Click(TObject *Sender);
+    void __fastcall Button5Click(TObject *Sender);
+    void __fastcall Button6Click(TObject *Sender);
+    void __fastcall pb1Click(TObject *Sender);
+    void __fastcall pb1MouseEnter(TObject *Sender);
+    void __fastcall pb1MouseLeave(TObject *Sender);
+    void __fastcall cacheblocksDblClick(TObject *Sender);
+    void __fastcall deblogDblClick(TObject *Sender);
+    void __fastcall FormPaint(TObject *Sender);
+    void __fastcall deblogMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift, int X,
+        int Y);
+    void __fastcall ramonlyExit(TObject *Sender);
+    void __fastcall Button9Click(TObject *Sender);
+    void __fastcall makefatdisk(TObject *Sender);
+    void __fastcall Button8Click(TObject *Sender);
+    void __fastcall Button10Click(TObject *Sender);
+    void __fastcall Button11Click(TObject *Sender);
+    void __fastcall deblogCustomDrawSubItem(TCustomListView *Sender, TListItem *Item, int SubItem,
+        TCustomDrawState State, bool &DefaultDraw);
+    void __fastcall Button12Click(TObject *Sender);
+    void __fastcall Button13Click(TObject *Sender);
+    void __fastcall Button14Click(TObject *Sender);
+    void __fastcall deblogKeyPress(TObject *Sender, wchar_t &Key);
+    void __fastcall Button15Click(TObject *Sender);
+    void __fastcall pb1MouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
+    void __fastcall onidle(TObject *Sender, bool &Done);
+    void __fastcall EurekaLog1ExceptionNotify(TEurekaExceptionRecord &EurekaExceptionRecord,
+        bool &Handled);
+    void __fastcall ftplogCustomDrawItem(TCustomListView *Sender, TListItem *Item,
+        TCustomDrawState State, bool &DefaultDraw);
+    void __fastcall ftpentKeyPress(TObject *Sender, wchar_t &Key);
+    void __fastcall ftpentEnter(TObject *Sender);
+    void __fastcall ftplogClick(TObject *Sender);
+    void __fastcall ftplogDblClick(TObject *Sender);
+    void __fastcall ftplogMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
+          int X, int Y);
+
+private: // User declarations
+public: // User declarations
+    __fastcall TForm1(TComponent *Owner);
+};
+
+BOOL __stdcall OnFormat(IN HANDLE hDisk, IN DWORD Progress, IN PVOID Context);
+unsigned long nread(unsigned long buf, unsigned long offset, unsigned long size, bool paged);
+// ---------------------------------------------------------------------------
+extern PACKAGE TForm1 *Form1;
+
+typedef struct
+{
+    ULONG offset;
+    ULONG len;
+    LPVOID buf;
+    ULONG changed;
+    bool unsaved;
+    DWORD opid;
+    int updates;
+    int hits;
+}CACHE;
+typedef struct
+{
+    char sign;
+    char cmd;
+    char paged;
+    char preverrstr[24];
+    char compid[24];
+    int preverr;
+    unsigned long offset;
+    unsigned long size;
+    unsigned long crc;
+    int flags;
+}PKT;
+
+unsigned long nwrite(unsigned long buf, unsigned long offset, unsigned long size, bool paged,
+    bool cachesave, int flags, char*addon);
+DWORD __stdcall OnRead(IN HANDLE hDisk, IN PVOID Context, IN PVOID Buffer, IN ULONG Length,
+    IN LARGE_INTEGER ByteOffset, IN BOOL PagingIo, OUT PULONG BytesRead);
+DWORD __stdcall OnWrite(IN HANDLE hDisk, IN PVOID Context, IN PVOID Buffer, IN ULONG Length,
+    IN LARGE_INTEGER ByteOffset, IN BOOL PagingIo, OUT PULONG BytesWritten);
+VOID __stdcall OnEvent(IN HANDLE hDisk, IN LONG DiskEvent, IN PVOID Context);
+void paintdisk(int what, LARGE_INTEGER off, ULONG len, bool paging, unsigned short crc);
+bool nconn(void);
+bool ftpconn(bool quick);
+DWORD WINAPI makefatdisk(LPVOID p);
+
+#define ftplock()   _ftplock(__FUNC__,__LINE__)
+#define ftpunlock() _ftpunlock(__FUNC__,__LINE__)
+void _ftplock(char*func = 0, int line = 0);
+void _ftpunlock(char*func = 0, int line = 0);
+
+typedef struct
+{
+    char bootcode[446];
+    char part1[16];
+    char part2[16];
+    char part3[16];
+    char part4[16];
+    unsigned short sign;
+}FB;
+typedef struct
+{
+    unsigned char state;
+    unsigned char begin_head;
+    unsigned short begin_cyl_sec;
+    unsigned char type;
+    unsigned char end_head;
+    unsigned short end_cyl_sec;
+    unsigned int mbr_1sec_diff;
+    unsigned int nsectors;
+}PART;
+typedef struct
+{
+    char jump[3];
+    char oem[8];
+    unsigned short bytes_per_sector;
+    unsigned char sectors_per_cluster;
+    unsigned short reserved_sectors;
+    unsigned char fat_copys;
+    unsigned short max_root_ent;
+    unsigned short nsect_less32mb;
+    unsigned char media;
+    unsigned short sectors_per_fat_old; // !fat32
+    unsigned short sectors_per_track;
+    unsigned short heads;
+    unsigned int hidden_sectors;
+    unsigned int sectors;
+    unsigned int sectors_per_fat;
+    unsigned short flags;
+    unsigned short version;
+    unsigned int start_root_cluster;
+    unsigned short file_info_sector;
+    unsigned short backup_boot_sector;
+    char reserved[12];
+    unsigned char logical_drive_num;
+    unsigned char unused;
+    unsigned char sign_0x29;
+    unsigned int serial_num;
+    char volume_name[11];
+    char fat32_name[8];
+    unsigned short sign;
+}FAT32BOOT;
+typedef struct
+{
+    unsigned char seq;
+    unsigned char fn5[10];
+    unsigned char attr; // 0x0f
+    unsigned char entry_type;
+    unsigned char cksum;
+    unsigned char fn6[12];
+    unsigned short zero; // 0x00
+    unsigned char fn7[4];
+}LFNDIR;
+typedef struct
+{
+    char fname[8];
+    char ext[3];
+    unsigned char attr;
+    char reserved;
+    unsigned char crtimesecs;
+    unsigned short crtime;
+    unsigned short crdate;
+    unsigned short laccessdate;
+    unsigned short st_clust_h;
+    unsigned short lmodtime;
+    unsigned short lmoddate;
+    unsigned short st_clust_l;
+    unsigned int size;
+}DIR;
+
+typedef struct
+{
+    int sign; // 0x41615252
+    char reserved[480];
+    int sign2; // 0x61417272
+    int free_count;
+    int next_free_hint;
+    char reserved2[12];
+    int sign3; // 0xaa550000
+}FSINFO;
+// ---------------------------------------------------------------------------
+
+typedef struct
+{
+    char fn[255];
+    char ftppath[255];
+    bool dir;
+    unsigned long start_offset;
+    unsigned long end_offset;
+    unsigned long clusters;
+    unsigned long accesses;
+    unsigned long size;
+    unsigned int firstcluster;
+    bool fetched;
+    LPVOID memory;
+    unsigned long memsize;
+}FATFILE;
+
+
+unsigned long ftppasvread(char *host, int port, char *buf, int bufsiz, unsigned long len);
+#endif

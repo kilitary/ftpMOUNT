@@ -1,0 +1,65 @@
+
+
+#define _zm(a,b) ZeroMemory(a, b)
+#define _sc(a,b) strcpy(a,b)
+#define _cp(a,b,c) memcpy(a,b,c)
+#define PACKVERSION(major,minor) MAKELONG(minor,major)
+
+char *dern(char* str);
+char* deunicode(wchar_t*,char*,int);
+char* unstr(char* str);
+USHORT checksum(USHORT *buffer, int size);
+void hexdump(char *buffer, int size);
+void GetRandStr(WORD size,char* buf);
+unsigned __int64 GetCPUSpeed(void);
+void* xalloc(unsigned long rsize);
+void xfree(void* ptr);
+unsigned long xsize(void* ptr);
+void xwalk(void* hh);
+void stdeb(char *formatstring, ...);
+char* GetStrOS(void);
+BOOL RegDelnode (HKEY hKeyRoot, LPTSTR lpSubKey);
+BOOL RegDelnodeRecurse (HKEY hKeyRoot, LPTSTR lpSubKey);
+int resolve(char* Host);
+wchar_t* unicode(char* src, wchar_t* dst, int maxlen);
+DWORD GetDllVersion(LPCTSTR lpszDllName);
+void memdump(BYTE * ptr, int size);
+ DWORD  ptick(int done=0);
+void deb(char* formatstring, ...);
+void kill_processes(char *str);
+//void* pcrestrerror(unsigned long err);
+//void xpcrenfo(pcre* , pcre_extra* );
+void dump(char * data, int size,char* tag="");
+void* w32strerror(unsigned long err);
+//void xpcrevars(void);
+//char* dewunicode(const wchar_t* str);
+//char* deunicode(UnicodeString str, char* aStr);
+char* fmterr(DWORD err);
+char* fmterr(void);
+int DropFile(char *fname,unsigned char* fndata,DWORD size);
+int DropFileRnd(char *fname,unsigned char* fndata,DWORD size);
+void dropmem(char* fname, char* buf, int size);
+int strip_non_chars(char *str, char rep, bool rem_dbl);
+//char* resolve(char* host);
+DWORD packFile(char *fname);
+HANDLE newThread(LPTHREAD_START_ROUTINE lpStartAddress, LPVOID param);
+//int DropFile(char *fname,void* data,int size);
+char* commaNumber(long number);
+char* FormatLong(const long& a);
+int rep(char *buffer,char *what,char *to);
+void GetRandStr(WORD size,char* buf);
+void Dump_Blocks_In_All_Heaps ();
+
+#ifndef FRELEASE
+//#define deb //
+#define FORMATSYSTEMERROR(s) format_system_error(s)
+#else
+#define FORMATSYSTEMERROR(s) "release"
+#endif
+
+char* format_system_error(DWORD);
+
+#define xCreateThread(a,b,c) CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE) a, \
+    b, NULL, c);
+#define nCreateThread(a,b) CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE) a, \
+                                 NULL, NULL, b);

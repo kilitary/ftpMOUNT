@@ -1,0 +1,138 @@
+// ---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "MakeFATThread.h"
+#include "CacheThread.h"
+#include "main.h"
+#include "vdskapi.h"
+#include <vector>
+#include "functions.h"
+#pragma package(smart_init)
+#include <algorithm>
+using namespace std;
+
+extern ULONG totcachsize;
+extern vector<CACHE>cache;
+extern TCriticalSection *ccs;
+extern TEvent *cev;
+extern int unsaved;
+#pragma package(smart_init)
+extern char loadfile[128];
+extern double disksize;
+extern LPVOID memory;
+extern HANDLE hdisk;
+extern LARGE_INTEGER sizee;
+// ---------------------------------------------------------------------------
+
+// Important: Methods and properties of objects in VCL can only be
+// used in a method called using Synchronize, for example:
+//
+// Synchronize(&UpdateCaption);
+//
+// where UpdateCaption could look like:
+//
+// void __fastcall MakeFAT::UpdateCaption()
+// {
+// Form1->Caption = "Updated in a thread";
+// }
+// ---------------------------------------------------------------------------
+
+__fastcall MakeFAT::MakeFAT(bool CreateSuspended):TThread(CreateSuspended)
+{
+}
+
+// ---------------------------------------------------------------------------
+void __fastcall MakeFAT::Execute()
+{
+    NameThreadForDebugging("MakeFAT");
+    // ---- Place thread code here ----
+    // Synchronize(Do);
+    Do();
+}
+extern unsigned char fb[];
+
+void __fastcall MakeFAT::Do(void)
+{
+    // od->Execute(NULL);
+
+    FILE *x;
+    char fn[128];
+
+    // disksize = (double)atoi(deunicode(Form1->Edit1->Text.c_str(), fn, sizeof(fn)))*1024*1024;
+    //
+    // if (memory)
+    // {
+    // delete[]memory;
+    // memory = NULL;
+    // }
+    //
+    // memory = new char[disksize];
+    //
+    // if (!disksize || !memory)
+    // {
+    // deb("no disksize %.0f, mem %x", disksize,memory);
+    // return;
+    // }
+
+    // deunicode(od->FileName.c_str(), fn, sizeof(fn));
+
+    strcpy(fn, loadfile);
+    x = fopen(fn, "rb");
+    if (!x)
+    {
+        deb("no file %s\r\n \r\n", loadfile);
+        return;
+    }
+    fseek(x, 0, SEEK_END);
+    unsigned long sz = ftell(x);
+    fseek(x, 0, SEEK_SET);
+
+
+    if(!sz||sz>55*1024*1024)
+        sz=55*1024*1024;
+        extern double maxquad;
+    maxquad=sz;
+    deb(" загржаем файл %s %lu байт (%lu mb)\r\n \r\n", loadfile, sz, sz/1024/1024);
+    // Application->ProcessMessages();
+    // char *pp = new char[sz];
+    extern LONGLONG curdisksize;
+    if (memory)
+        HeapFree(GetProcessHeap(), 0, memory);
+
+
+
+    curdisksize = (unsigned long)sz;
+    memory = HeapAlloc(GetProcessHeap(), 0, curdisksize);
+    disksize = curdisksize;
+    if (!memory)
+        deb("failed alloc mem");
+    else
+        deb("mem %lu OK",curdisksize);
+
+    SIZE_T rd = fread(memory, 1, (unsigned int)curdisksize, x);
+    deb("fread %u mb", (unsigned)rd/1024/1024);
+    // disksize = sz;
+    // memory = new char[sz];
+    // sz = sz>disksize?disksize:sz;
+    // sz = fread(memory, 1, sz, x);
+
+    // deb("memcpy %d bytes to disksize=%.0f @%p from %p", sz, disksize,memory,pp);
+    // memcpy(memory, pp, disksize);
+
+    // delete[]pp;
+    // deb("загружено %d байт @ %p (%d Мб) СRC=0x%04x\r\n disksize=%.0f\r\n", sz, memory,
+    // sz/1024/1024, checksum((unsigned short*)memory, (int)disksize), disksize);
+
+    fclose(x);
+    deb("%s загружен", loadfile);
+    extern FAT32BOOT fat32boot;
+    memcpy(&fat32boot, memory, sizeof(fat32boot));
+    Form1->Button9Click(NULL);
+    Application->ProcessMessages();
+    // VdskSetDisk(hdisk, sizee, 2, 32, 512, false, true, true);
+    // if (Form1->Button1->Enabled)
+    // Form1->Button1Click(NULL);
+}
+// ---------------------------------------------------------------------------

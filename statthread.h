@@ -1,0 +1,20 @@
+// ---------------------------------------------------------------------------
+
+#ifndef statthreadH
+#define statthreadH
+// ---------------------------------------------------------------------------
+#include <Classes.hpp>
+
+// ---------------------------------------------------------------------------
+class statthread:public TThread
+{
+protected:
+    void __fastcall Execute();
+
+public:
+    __fastcall statthread(bool CreateSuspended);
+    void __fastcall Do(void);
+    void __fastcall xxyu(void);
+};
+// ---------------------------------------------------------------------------
+#endif
